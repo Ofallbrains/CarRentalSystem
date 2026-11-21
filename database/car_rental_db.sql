@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS car_rental_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE car_rental_db;
+CREATE TABLE customers(customer_id INT AUTO_INCREMENT PRIMARY KEY,full_name VARCHAR(120) NOT NULL,email VARCHAR(150) NOT NULL UNIQUE,phone VARCHAR(30) NOT NULL,created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE cars(car_id INT AUTO_INCREMENT PRIMARY KEY,registration_number VARCHAR(30) NOT NULL UNIQUE,make VARCHAR(60) NOT NULL,model VARCHAR(60) NOT NULL,year INT NOT NULL,category VARCHAR(50) NOT NULL,daily_rate DECIMAL(10,2) NOT NULL,status ENUM('Available','Booked','Rented','Maintenance') NOT NULL DEFAULT 'Available');
+CREATE TABLE bookings(booking_id INT AUTO_INCREMENT PRIMARY KEY,customer_id INT NOT NULL,car_id INT NOT NULL,start_date DATE NOT NULL,end_date DATE NOT NULL,total_amount DECIMAL(10,2) NOT NULL,status ENUM('Pending','Approved','Cancelled','Completed') NOT NULL DEFAULT 'Pending',created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY(customer_id) REFERENCES customers(customer_id),FOREIGN KEY(car_id) REFERENCES cars(car_id));
+CREATE TABLE payments(payment_id INT AUTO_INCREMENT PRIMARY KEY,booking_id INT NOT NULL,amount DECIMAL(10,2) NOT NULL,payment_date DATE NOT NULL,payment_method ENUM('Cash','Card','Mobile Money','Bank Transfer') NOT NULL,payment_status ENUM('Pending','Paid','Failed','Refunded') NOT NULL DEFAULT 'Pending',FOREIGN KEY(booking_id) REFERENCES bookings(booking_id));
+INSERT INTO customers(full_name,email,phone) VALUES('Test Customer','customer@example.com','0780000000');
+INSERT INTO cars(registration_number,make,model,year,category,daily_rate) VALUES('RAC-001-A','Toyota','Corolla',2022,'Sedan',45000.00);

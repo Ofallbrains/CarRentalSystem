@@ -1,0 +1,5 @@
+namespace CarRentalSystem.Models;
+public class Customer { public int CustomerId{get;set;} public string FullName{get;set;}=""; public string Email{get;set;}=""; public string Phone{get;set;}=""; }
+public class Car { public int CarId{get;set;} public string RegistrationNumber{get;set;}=""; public string Make{get;set;}=""; public string Model{get;set;}=""; public int Year{get;set;} public string Category{get;set;}=""; public decimal DailyRate{get;set;} public string Status{get;set;}="Available"; }
+public class Booking { public int BookingId{get;set;} public int CustomerId{get;set;} public int CarId{get;set;} public DateTime StartDate{get;set;} public DateTime EndDate{get;set;} public decimal TotalAmount{get;set;} public string Status{get;set;}="Pending"; }
+public class Payment { public int PaymentId{get;set;} public int BookingId{get;set;} public decimal Amount{get;set;} public DateTime PaymentDate{get;set;} public string PaymentMethod{get;set;}="Cash"; public string PaymentStatus{get;set;}="Pending"; }

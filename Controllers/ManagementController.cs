@@ -1,0 +1,10 @@
+using System.Data;
+using CarRentalSystem.Models;
+namespace CarRentalSystem.Controllers;
+public class ManagementController {
+ readonly CustomerRepository cr=new(); readonly CarRepository ar=new(); readonly BookingRepository br=new(); readonly PaymentRepository pr=new();
+ public DataTable Customers()=>cr.All(); public void AddCustomer(string n,string e,string p){if(string.IsNullOrWhiteSpace(n)||string.IsNullOrWhiteSpace(e)||string.IsNullOrWhiteSpace(p))throw new Exception("Complete all customer fields.");cr.Add(n,e,p);} public void UpdateCustomer(int id,string n,string e,string p)=>cr.Update(id,n,e,p); public void DeleteCustomer(int id)=>cr.Delete(id);
+ public DataTable Cars()=>ar.All(); public void AddCar(string r,string ma,string mo,int y,string cat,decimal rate,string s){if(string.IsNullOrWhiteSpace(r)||string.IsNullOrWhiteSpace(ma)||string.IsNullOrWhiteSpace(mo))throw new Exception("Complete registration, make and model.");ar.Add(r,ma,mo,y,cat,rate,s);} public void UpdateCar(int id,string r,string ma,string mo,int y,string cat,decimal rate,string s)=>ar.Update(id,r,ma,mo,y,cat,rate,s); public void DeleteCar(int id)=>ar.Delete(id);
+ public DataTable Bookings()=>br.All(); public DataTable BookingCustomers()=>br.Customers(); public DataTable AvailableCars()=>br.Cars(); public void AddBooking(int c,int a,DateTime s,DateTime e,decimal t){if(e.Date<=s.Date)throw new Exception("End date must be after start date.");br.Add(c,a,s,e,t);} public void BookingStatus(int id,string s)=>br.Status(id,s); public void DeleteBooking(int id)=>br.Delete(id);
+ public DataTable Payments()=>pr.All(); public DataTable PaymentBookings()=>pr.Bookings(); public void AddPayment(int b,decimal a,DateTime d,string m,string s)=>pr.Add(b,a,d,m,s); public void PaymentStatus(int id,string s)=>pr.Status(id,s); public void DeletePayment(int id)=>pr.Delete(id);
+}
